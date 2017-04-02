@@ -1,0 +1,53 @@
+﻿<html>
+<head>
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/marquee.css" />
+    <link rel="stylesheet" href="../css/button.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+
+    <style>
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: black;
+            height: 50px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="marquee" id="ScrollableArea">
+        <div id="ScrollableContainer" class="marqueeScroll">
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("body").mouseenter(function () {
+                $("#ScrollableContainer").css("-webkit-animation-play-state", "paused");
+            });
+
+            $("body").mouseleave(function () {
+                $("#ScrollableContainer").css("-webkit-animation-play-state", "running");
+            });
+
+            $.getJSON("http://localhost:5000/v1/gettasks", function (data) {
+                var div = document.getElementById('ScrollableContainer');
+
+                $.each(data, function (key, val) {
+                    var btn = document.createElement('button');
+                    var txt = document.createTextNode(String(val.title));
+                    btn.appendChild(txt);
+                    btn.setAttribute('type', 'button');
+                    btn.setAttribute('onclick', 'cefCustomObject.showDevTools()');
+                    btn.setAttribute('id', 'button' + val.id);
+                    div.appendChild(btn);
+                });
+
+            });
+            // jQuery methods go here...
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f9c76c01-378a-4114-ae7d-aa2763a061b5</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SharedProject</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)IScheduleTaskManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ScheduleTask.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JSONFileScheduleTaskManager.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebScrollerClient", "WebScrollerClient\WebScrollerClient.csproj", "{A7B2819E-E331-40BF-8926-C76C17A235EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrollerServiceConsole", "ScrollerServiceConsole\ScrollerServiceConsole.csproj", "{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedProject", "SharedProject\SharedProject.shproj", "{F9C76C01-378A-4114-AE7D-AA2763A061B5}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedProject\SharedProject.projitems*{a7b2819e-e331-40bf-8926-c76c17a235ef}*SharedItemsImports = 4
+		SharedProject\SharedProject.projitems*{5d106c3d-d5a0-4b3d-b7b4-853ceb2a100d}*SharedItemsImports = 4
+		SharedProject\SharedProject.projitems*{f9c76c01-378a-4114-ae7d-aa2763a061b5}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Debug|x86.ActiveCfg = Debug|x86
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Debug|x86.Build.0 = Debug|x86
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Release|x86.ActiveCfg = Release|x86
+		{A7B2819E-E331-40BF-8926-C76C17A235EF}.Release|x86.Build.0 = Release|x86
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Debug|x86.Build.0 = Debug|Any CPU
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Release|x86.ActiveCfg = Release|Any CPU
+		{5D106C3D-D5A0-4B3D-B7B4-853CEB2A100D}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
