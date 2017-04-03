@@ -26,27 +26,13 @@ namespace SharedProject
         public JSONFileScheduleTaskManager(string pathToJSONFile)
         {
 
-            if(!File.Exists(pathToJSONFile))
+            if (!File.Exists(pathToJSONFile))
             {
-                throw new FileNotFoundException("Unable to validate that file exist.",pathToJSONFile);
+                throw new FileNotFoundException("Unable to validate that file exist.", pathToJSONFile);
             }
             else
             {
                 taskFile = pathToJSONFile;
-            }
-
-            try
-            {
-                using (StreamReader file = File.OpenText(taskFile))
-                {
-                    var json = file.ReadToEnd();
-                    Tasks = JsonConvert.DeserializeObject<List<ScheduleTask>>(json);                    
-                }
-
-            }
-            catch (Exception)
-            {
-                throw;
             }
         }
 
@@ -63,7 +49,7 @@ namespace SharedProject
         public int RemoveScheduleTaskByID(int id)
         {
             var results = Tasks.RemoveAll(x => x.id == id);
-            if(results > 0)
+            if (results > 0)
             {
                 Save();
             }
@@ -78,12 +64,25 @@ namespace SharedProject
 
         public void Load()
         {
+            try
+            {
+                using (StreamReader file = File.OpenText(taskFile))
+                {
+                    var json = file.ReadToEnd();
+                    Tasks = JsonConvert.DeserializeObject<List<ScheduleTask>>(json);
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
 
         public void Reload()
         {
-            
+
         }
 
         public void Save()
@@ -91,9 +90,20 @@ namespace SharedProject
             var JsonTasks = JsonConvert.SerializeObject(Tasks);
 
             Console.WriteLine(Tasks.Count());
+            try
+            {
 
-            File.WriteAllText(taskFile, JsonTasks);
+                using (StreamWriter writer = new StreamWriter(taskFile, false))
+                {
+                    writer.WriteAsync(JsonTasks);
+                }
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

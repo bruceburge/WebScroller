@@ -10,10 +10,17 @@ namespace AwesomeNancySelfHost
     {
         public TaskModule() :base("/v1")
         {
-            var scheduleTaskManager = new JSONFileScheduleTaskManager(@"Z:\Users\Bruce\Documents\visual studio 2015\Projects\WebScrollerV1\SelfHostedWebAPI\resources\json\task.json");
+
+            var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var directory = System.IO.Path.GetDirectoryName(location);
+            var path = System.IO.Path.Combine(directory, @"resources\json\task.json");
+
+            //this is reloaded everytime a call is made, consider static singleton, or generally better way. 
+            var scheduleTaskManager = new JSONFileScheduleTaskManager(path);
 
             Get["/gettasks"] = parameters =>
             {
+                scheduleTaskManager.Load();
                 var results = scheduleTaskManager.GetAllScheduleTask();
                 Console.WriteLine("# of task loaded: " + results.Count);
                 return Response.AsJson(results);
