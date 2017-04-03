@@ -9,7 +9,7 @@ namespace SharedProject
     public class JSONFileScheduleTaskManager : IScheduleTaskManager
     {
         private List<ScheduleTask> _tasks = new List<ScheduleTask>();
-
+        private string taskFile = string.Empty;
         public List<ScheduleTask> Tasks
         {
             get
@@ -30,12 +30,16 @@ namespace SharedProject
             {
                 throw new FileNotFoundException("Unable to validate that file exist.",pathToJSONFile);
             }
+            else
+            {
+                taskFile = pathToJSONFile;
+            }
 
             try
             {
-                using (StreamReader file = File.OpenText(pathToJSONFile))
+                using (StreamReader file = File.OpenText(taskFile))
                 {
-                    var json = System.IO.File.ReadAllText(pathToJSONFile);
+                    var json = file.ReadToEnd();
                     Tasks = JsonConvert.DeserializeObject<List<ScheduleTask>>(json);                    
                 }
 
@@ -58,7 +62,13 @@ namespace SharedProject
         /// <returns>Count of Elements removed.</returns>
         public int RemoveScheduleTaskByID(int id)
         {
-            return Tasks.RemoveAll(x => x.id == id);
+            var results = Tasks.RemoveAll(x => x.id == id);
+            if(results > 0)
+            {
+                Save();
+            }
+
+            return results;
         }
 
         public List<ScheduleTask> GetAllScheduleTask()
@@ -78,6 +88,11 @@ namespace SharedProject
 
         public void Save()
         {
+            var JsonTasks = JsonConvert.SerializeObject(Tasks);
+
+            Console.WriteLine(Tasks.Count());
+
+            File.WriteAllText(taskFile, JsonTasks);
 
         }
 

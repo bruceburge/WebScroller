@@ -19,7 +19,7 @@ namespace WebScrollerClient
 
         public ChromiumWebBrowser chromeBrowser;
         private bool mouseIsDown;
-        private Point firstPoint;
+        private Point firstPoint;        
 
         String page = string.Format(@"{0}\resources\html\page.html", Application.StartupPath);
 
@@ -44,13 +44,12 @@ namespace WebScrollerClient
             // Create a browser component
             chromeBrowser = new ChromiumWebBrowser(page);
             chromeBrowser.BackColor = Color.Black;
-            // Add it to the form and fill it to the form window.
-            //this.Controls.Add(chromeBrowser);
-            //chromeBrowser.Visible = false;
             this.splitContainer1.Panel1.Controls.Add(chromeBrowser);
             chromeBrowser.Dock = DockStyle.Fill;
 
-            chromeBrowser.LoadingStateChanged += ChromeBrowser_LoadingStateChanged;
+            //chromeBrowser.LoadingStateChanged += ChromeBrowser_LoadingStateChanged;
+
+            chromeBrowser.IsBrowserInitializedChanged += ChromeBrowser_IsBrowserInitializedChanged; 
 
             //These events don't bubble up in winforms :-( 
             //chromeBrowser.MouseDown += ChromeBrowser_MouseDown; ;
@@ -63,17 +62,26 @@ namespace WebScrollerClient
             browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
             chromeBrowser.BrowserSettings = browserSettings;
             //chromeBrowser.Visible = false;
+
         }
 
-        private void ChromeBrowser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+        private void ChromeBrowser_IsBrowserInitializedChanged(object sender, IsBrowserInitializedChangedEventArgs e)
         {
-            this.InvokeOnUiThreadIfRequired(() => SetIsLoading(!e.CanReload));
+            if(e.IsBrowserInitialized)
+            {
+                chromeBrowser.ShowDevTools();
+            }
         }
 
-        private void SetIsLoading(bool v)
-        {
-            //chromeBrowser.Visible = v;
-        }
+        //private void ChromeBrowser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+        //{
+        //    this.InvokeOnUiThreadIfRequired(() => SetIsLoading(e.CanReload));
+        //}
+
+        //private void SetIsLoading(bool v)
+        //{
+        //    MessageBox.Show("Can Reload");
+        //}
 
         public Form1()
         {
@@ -92,9 +100,7 @@ namespace WebScrollerClient
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-
-
+        {            
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -104,9 +110,9 @@ namespace WebScrollerClient
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Cef.Shutdown();
+            ShutdownBrowser();
         }
-
+        
 
         #region HandleScreenMovement
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -177,7 +183,8 @@ namespace WebScrollerClient
         private void tsmExit_Click(object sender, EventArgs e)
         {
             this.Visible = false;
-            Application.Exit();
+            ShutdownBrowser();
+            Application.Exit();            
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -194,6 +201,15 @@ namespace WebScrollerClient
         private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void ShutdownBrowser()
+        {
+            if(!chromeBrowser.IsDisposed)
+            {
+                chromeBrowser.Dispose();
+            }
+            Cef.Shutdown();
         }
     }
 }

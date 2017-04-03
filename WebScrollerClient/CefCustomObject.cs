@@ -29,6 +29,11 @@ namespace WebScrollerClient
             _instanceBrowser.ShowDevTools();
         }
 
+        public void printToConsoleId(string id)
+        {
+            MessageBox.Show("Id : " + id);
+        }
+
         public void opencmd()
         {
             ProcessStartInfo start = new ProcessStartInfo("cmd.exe", "/c pause");

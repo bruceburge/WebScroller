@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="../css/marquee.css" />
     <link rel="stylesheet" href="../css/button.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/vue"></script>
+    <!--<script src="https://unpkg.com/vue"></script>-->
 
     <style>
         body {
@@ -22,6 +22,37 @@
         </div>
     </div>
     <script>
+
+        function removeAndReload(id) {
+            $.get("http://localhost:5000/v1/number/"+id+"/")
+                .done(function () {
+                })
+              .fail(function () {
+                  alert("error");
+              })
+              .always(function () {
+                  loadTask();
+              });
+
+        }
+
+        function loadTask() {
+            $.getJSON("http://localhost:5000/v1/gettasks", function (data) {
+                var div = document.getElementById('ScrollableContainer');
+                div.innerHTML = "";
+                $.each(data, function (key, val) {
+                    var btn = document.createElement('button');
+                    var txt = document.createTextNode(String(val.title));
+                    btn.appendChild(txt);
+                    btn.setAttribute('type', 'button');
+                    btn.setAttribute('onclick', 'removeAndReload(' + val.id + ')');
+                    btn.setAttribute('id', 'button' + val.id);
+                    div.appendChild(btn);
+                });
+
+            });
+        }
+
         $(function () {
             $("body").mouseenter(function () {
                 $("#ScrollableContainer").css("-webkit-animation-play-state", "paused");
@@ -31,20 +62,7 @@
                 $("#ScrollableContainer").css("-webkit-animation-play-state", "running");
             });
 
-            $.getJSON("http://localhost:5000/v1/gettasks", function (data) {
-                var div = document.getElementById('ScrollableContainer');
-
-                $.each(data, function (key, val) {
-                    var btn = document.createElement('button');
-                    var txt = document.createTextNode(String(val.title));
-                    btn.appendChild(txt);
-                    btn.setAttribute('type', 'button');
-                    btn.setAttribute('onclick', 'cefCustomObject.showDevTools()');
-                    btn.setAttribute('id', 'button' + val.id);
-                    div.appendChild(btn);
-                });
-
-            });
+            loadTask();
             // jQuery methods go here...
 
         });
