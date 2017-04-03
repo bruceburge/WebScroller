@@ -13,7 +13,7 @@ namespace AwesomeNancySelfHost
 
             var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
             var directory = System.IO.Path.GetDirectoryName(location);
-            var path = System.IO.Path.Combine(directory, @"resources\json\task.json");
+            var path = System.IO.Path.Combine(directory, @"v1\resources\json\task.json");
 
             //this is reloaded everytime a call is made, consider static singleton, or generally better way. 
             var scheduleTaskManager = new JSONFileScheduleTaskManager(path);

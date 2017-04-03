@@ -10,7 +10,10 @@ namespace ScrollerServiceConsole
 
         public void Start()
         {
-            m_nancyHost = new NancyHost(new Uri("http://localhost:5000"));
+            HostConfiguration nancyConfig = new HostConfiguration();
+            nancyConfig.UrlReservations.CreateAutomatically = true;
+
+            m_nancyHost = new NancyHost(nancyConfig,new Uri("http://localhost:5000"));
             m_nancyHost.Start();
 
         }
