@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharedProject
+namespace ScrollerServiceConsole
 {
     public class ScheduleTask
     {

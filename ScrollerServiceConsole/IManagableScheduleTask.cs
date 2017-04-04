@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace SharedProject
+
+namespace ScrollerServiceConsole
 {
-    public interface IScheduleTaskManager
+    public interface IManagableScheduleTask
     {
         List<ScheduleTask> Tasks { get; set; }
 

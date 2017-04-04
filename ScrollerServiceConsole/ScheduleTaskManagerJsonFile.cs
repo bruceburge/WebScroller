@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SharedProject
+namespace ScrollerServiceConsole
 {
-    public class JSONFileScheduleTaskManager : IScheduleTaskManager
+    public class ScheduleTaskManagerJsonFile : IManagableScheduleTask
     {
         private List<ScheduleTask> _tasks = new List<ScheduleTask>();
         private string taskFile = string.Empty;
@@ -23,17 +23,17 @@ namespace SharedProject
             }
         }
 
-        public JSONFileScheduleTaskManager(string pathToJSONFile)
+        public ScheduleTaskManagerJsonFile(string filePath)
         {
-
-            if (!File.Exists(pathToJSONFile))
+            if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException("Unable to validate that file exist.", pathToJSONFile);
+                throw new FileNotFoundException("Unable to validate that file exist.", filePath);
             }
             else
             {
-                taskFile = pathToJSONFile;
+                taskFile = filePath;
             }
+
         }
 
         public ScheduleTask GetScheduleTaskByID(int id)
@@ -63,7 +63,7 @@ namespace SharedProject
         }
 
         public void Load()
-        {
+        {         
             try
             {
                 using (StreamReader file = File.OpenText(taskFile))
