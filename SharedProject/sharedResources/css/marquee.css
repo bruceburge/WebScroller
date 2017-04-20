@@ -1,6 +1,7 @@
 ﻿.marquee {
     overflow: hidden;
     position: relative;
+    width: 100%;
 }
 
 .marqueeScroll {
@@ -11,9 +12,11 @@
     -webkit-transform: translateX(100%);
     transform: translateX(100%);
     /* Apply animation to this element */
-    -moz-animation: example1 15s linear infinite;
-    -webkit-animation: example1 15s linear infinite;
-    animation: example1 15s linear infinite;
+    -moz-animation: example1 30s linear infinite;
+    -webkit-animation: example1 30s linear infinite;
+    animation: example1 30s linear infinite;
+    width: 100%;
+    float: left;
 }
 /* Move it (define the animation) */
 @-moz-keyframes example1 {

@@ -11,9 +11,27 @@
             margin: 0 !important;
             padding: 0 !important;
             background-color: black;
-            height: 50px;
+            height: 35px;
             overflow: hidden;
+            display: inline-block;
         }
+
+        ul {
+            display: table;
+            min-width: 1000px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border-collapse: separate;
+        }
+
+            ul li {
+                display: /*inline-block*/ table-cell;
+                padding: 0;
+                margin: 0;
+                overflow:visible;
+            }
+
     </style>
 </head>
 <body>
@@ -39,17 +57,27 @@
         function loadTask() {
             $.getJSON("http://localhost:5000/v1/gettasks", function (data) {
                 var div = document.getElementById('ScrollableContainer');
+                var ul = document.createElement("Ul");
+                
                 div.innerHTML = "";
+                var count = 0;
                 $.each(data, function (key, val) {
+                    var li = document.createElement("li");
                     var btn = document.createElement('button');
-                    var txt = document.createTextNode(String(val.title));
+                    var txt = document.createTextNode(String(val.description));
                     btn.appendChild(txt);
                     btn.setAttribute('type', 'button');
                     btn.setAttribute('onclick', 'removeAndReload(' + val.id + ')');
                     btn.setAttribute('id', 'button' + val.id);
-                    div.appendChild(btn);
+                    btn.setAttribute('title', val.description);
+                    li.appendChild(btn);
+                    ul.appendChild(li);
+                    //console.log(val.title);
+                    count++;
                 });
-
+                ul.clientWidth = count * 200;
+                div.appendChild(ul);
+                
             });
         }
 

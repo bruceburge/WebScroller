@@ -26,6 +26,7 @@ namespace ScrollerServiceConsole
 
         public List<ScheduleTask> GetAllScheduleTask()
         {
+            Reload();
             return Tasks;
         }
 
@@ -47,6 +48,7 @@ namespace ScrollerServiceConsole
 
             try
             {
+                Tasks.Clear();
                 var OutlookApp = new Microsoft.Office.Interop.Outlook.Application();
                 ns = OutlookApp.Session;
                 todoFolder = ns.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderToDo);
@@ -60,20 +62,20 @@ namespace ScrollerServiceConsole
                         email = outlookItem as Outlook.MailItem;
                         if (email.FlagStatus != OlFlagStatus.olFlagComplete)
                         {
-                            Tasks.Add(new ScheduleTask { description="Email: "+ email.Subject, dueDate= email.TaskDueDate, title = StringUtilities.TruncateWithEllipsis(email.Subject, lengthOfDisplayString) });
+                            Tasks.Add(new ScheduleTask {id=i, description="Email: "+ email.Subject, dueDate= email.TaskDueDate, title = StringUtilities.TruncateWithEllipsis(email.Subject, lengthOfDisplayString) });
                         }
                     }
                     else if (outlookItem is Outlook.ContactItem)
                     {
                         contact = outlookItem as Outlook.ContactItem;
-                        Tasks.Add(new ScheduleTask { description = "Contact: " + contact.FullName, dueDate = contact.TaskDueDate, title = StringUtilities.TruncateWithEllipsis(contact.FullName, lengthOfDisplayString) });
+                        Tasks.Add(new ScheduleTask { id = i, description = "Contact: " + contact.FullName, dueDate = contact.TaskDueDate, title = StringUtilities.TruncateWithEllipsis(contact.FullName, lengthOfDisplayString) });
                     }
                     else if (outlookItem is Outlook.TaskItem)
                     {
                         task = outlookItem as Outlook.TaskItem;
                         if (task.Status != OlTaskStatus.olTaskDeferred && task.Status != OlTaskStatus.olTaskComplete && task.Status != OlTaskStatus.olTaskWaiting)
                         {
-                            Tasks.Add(new ScheduleTask { description = "Task: " + task.Subject, dueDate = task.DueDate, status=task.Status.ToString(), title = StringUtilities.TruncateWithEllipsis(task.Subject, lengthOfDisplayString) });
+                            Tasks.Add(new ScheduleTask { id = i, description = "Task: " + task.Subject, dueDate = task.DueDate, status=task.Status.ToString(), title = StringUtilities.TruncateWithEllipsis(task.Subject, lengthOfDisplayString) });
                         }
                     }
                     else
@@ -95,7 +97,7 @@ namespace ScrollerServiceConsole
 
         public void Reload()
         {
-            throw new NotImplementedException();
+            Load();
         }
 
         public int RemoveScheduleTaskByID(int id)

@@ -21,7 +21,7 @@ namespace WebScrollerClient
         private bool mouseIsDown;
         private Point firstPoint;        
 
-        String page = string.Format(@"{0}\resources\html\page.html", Application.StartupPath);
+        String page = string.Format(@"{0}\sharedResources\html\page.html", Application.StartupPath);
 
         public void InitializeChromium()
         {
@@ -49,7 +49,7 @@ namespace WebScrollerClient
 
             //chromeBrowser.LoadingStateChanged += ChromeBrowser_LoadingStateChanged;
 
-            chromeBrowser.IsBrowserInitializedChanged += ChromeBrowser_IsBrowserInitializedChanged; 
+            chromeBrowser.IsBrowserInitializedChanged += ChromeBrowser_IsBrowserInitializedChanged;
 
             //These events don't bubble up in winforms :-( 
             //chromeBrowser.MouseDown += ChromeBrowser_MouseDown; ;
@@ -57,9 +57,11 @@ namespace WebScrollerClient
             //chromeBrowser.MouseUp += Form1_MouseUp;
 
             // Allow the use of local resources in the browser
-            BrowserSettings browserSettings = new BrowserSettings();
-            browserSettings.FileAccessFromFileUrls = CefState.Enabled;
-            browserSettings.UniversalAccessFromFileUrls = CefState.Enabled;
+            BrowserSettings browserSettings = new BrowserSettings()
+            {
+                FileAccessFromFileUrls = CefState.Enabled,
+                UniversalAccessFromFileUrls = CefState.Enabled
+            };
             chromeBrowser.BrowserSettings = browserSettings;
             //chromeBrowser.Visible = false;
 
@@ -69,7 +71,7 @@ namespace WebScrollerClient
         {
             if(e.IsBrowserInitialized)
             {
-                chromeBrowser.ShowDevTools();
+                //chromeBrowser.ShowDevTools();
             }
         }
 
@@ -88,9 +90,9 @@ namespace WebScrollerClient
             InitializeComponent();
 
             //resize the form to half the screen, then center it at the top
-            this.Width = (int)Screen.PrimaryScreen.WorkingArea.Width / 2;
-            int x = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
-            this.Location = new Point(x, 0);
+            Width = (int)(Screen.PrimaryScreen.WorkingArea.Width * .75);
+            int x = (Screen.PrimaryScreen.Bounds.Width - Width) / 2;
+            Location = new Point(x, 0);
 
             //btnMove.Width = splitContainer1.Panel2.Width;
 

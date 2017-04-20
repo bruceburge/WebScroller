@@ -3,6 +3,8 @@ using Nancy;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using ScrollerServiceConsole;
+using System.IO;
+using System.Reflection;
 
 namespace AwesomeNancySelfHost
 {
@@ -10,6 +12,16 @@ namespace AwesomeNancySelfHost
     {
         public TaskModule(IManagableScheduleTask manager) : base("/v1")
         {
+            After.AddItemToEndOfPipeline((ctx) => ctx.Response
+            .WithHeader("Access-Control-Allow-Origin", "*")
+            .WithHeader("Access-Control-Allow-Methods", "POST,GET")
+            .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type"));
+
+            Get["/"] = parameters =>
+            {
+                string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"sharedResources\html\page.html");
+                return Response.AsFile(path, "text/html");
+            };
 
             Get["/gettasks"] = parameters =>
             {                
